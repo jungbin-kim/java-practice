@@ -7,6 +7,7 @@ import java.util.*;
 public class CandyPang {
     /*
         url: https://codeup.kr/problem.php?id=2605
+        type: DFS
      */
     @Test
     public void main() {
