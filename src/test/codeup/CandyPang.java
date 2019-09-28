@@ -31,6 +31,7 @@ public class CandyPang {
         for(int i=0; i < input.length; i++) {
             for(int j=0; j < input.length; j++) {
                 Cord cord = new Cord(i, j, input[i][j]);
+
                 if(checkedCordMap.getOrDefault(cord, false) == false) {
                     checkedCordMap.put(cord, true);
                     List<Cord> result = new ArrayList<>();
@@ -48,7 +49,8 @@ public class CandyPang {
     void loop(Cord cord, int[][] input, Map<Cord, Boolean> checkedCordMap, List<Cord> result) {
         if(cord.column + 1 < input.length) {
             Cord nextCol = new Cord(cord.row, cord.column + 1, input[cord.row][cord.column + 1]);
-            if(cord.color == nextCol.color) {
+            // checkedCordMap 에 true로 되어있는지 검사 필요. 한번 검사된 것을 다시 수행하지 않게 하는 조건 추가
+            if(cord.color == nextCol.color && !checkedCordMap.getOrDefault(nextCol, false)) {
                 checkedCordMap.putIfAbsent(nextCol, true);
                 result.add(nextCol);
                 loop(nextCol, input, checkedCordMap, result);
@@ -56,7 +58,7 @@ public class CandyPang {
         }
         if(cord.row + 1 < input.length) {
             Cord nextRow = new Cord(cord.row + 1, cord.column, input[cord.row+1][cord.column]);
-            if(cord.color == nextRow.color) {
+            if(cord.color == nextRow.color && !checkedCordMap.getOrDefault(nextRow, false)) {
                 checkedCordMap.putIfAbsent(nextRow, true);
                 result.add(nextRow);
                 loop(nextRow, input, checkedCordMap, result);
@@ -84,6 +86,11 @@ public class CandyPang {
                 return row == that.row && column == that.column;
             }
             return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(row, column);
         }
 
         @Override
