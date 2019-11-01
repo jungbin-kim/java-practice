@@ -26,7 +26,10 @@ public class Exam3 {
 //        int[] pattern = {5,3};
 
         Map<Integer, Point> m = init();
+        // pattern -> 좌표로 변경
         List<Point> transformed = Arrays.stream(pattern).boxed().map(i -> m.get(i)).collect(Collectors.toList());
+
+        // 좌표를 라인 객체로 변경
         ArrayList<Line> lines = new ArrayList<>();
         for(int i = 0; i < transformed.size() - 1; i++) {
             lines.add(new Line(transformed.get(i), transformed.get(i+1)));
@@ -110,6 +113,7 @@ public class Exam3 {
         if(p1Line1.equals(p3Line2) || p1Line1.equals(p4Line2) || p2Line1.equals(p3Line2) || p2Line1.equals(p4Line2)) {
             return true;
         }
+        // 1 공식 1: 점의 좌표 4개 => https://zetawiki.com/wiki/%EB%91%90_%EC%A7%81%EC%84%A0%EC%9D%98_%EA%B5%90%EC%B0%A8%EC%A0%90
         int xUp = (p1Line1.x * p2Line1.y - p1Line1.y * p2Line1.x) * (p3Line2.x - p4Line2.x) - (p1Line1.x - p2Line1.x) * (p3Line2.x * p4Line2.y - p3Line2.y * p4Line2.x);
         int yUp = (p1Line1.x * p2Line1.y - p1Line1.y * p2Line1.x)*(p3Line2.y - p4Line2.y) - (p1Line1.y - p2Line1.y)*(p3Line2.x * p4Line2.y - p3Line2.y * p4Line2.x);
         int down = (p1Line1.x - p2Line1.x) * (p3Line2.y - p4Line2.y) - (p1Line1.y - p2Line1.y) * (p3Line2.x - p4Line2.x);
